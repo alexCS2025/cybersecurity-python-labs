@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Data for task 3
+data/
+
+# Ds store?
+.DS_Store
