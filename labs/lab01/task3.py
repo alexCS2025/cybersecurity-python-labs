@@ -76,8 +76,12 @@ def create_users(users_list: tuple) -> None:
                     writer.writerow(u_tuple)
                 except (ValidationError, ValueError) as e:
                     print(f"{user} not created. Error: {e}")
-    except (OSError, FileNotFoundError, PermissionError) as e:
-        print(f"File system error occurred when creating users: {e}")
+    except FileNotFoundError:
+        print("File is not found!")
+    except PermissionError:
+        print("File permission error!")
+    except OSError as e:
+        print(e)
 
 
 def read_users_db() -> list:
@@ -99,8 +103,12 @@ def read_users_db() -> list:
             print(f"{user:<20} | {hash[:35]}...")
         print("\n")
         return db
-    except (OSError, FileNotFoundError, PermissionError) as e:
-        print(f"File system error while reading users DB: {e}")
+    except FileNotFoundError:
+        print(f"File is not found!")
+    except PermissionError:
+        print("File permission error!")
+    except OSError as e:
+        print(e)
 
 
 def log_event(func):
@@ -109,7 +117,7 @@ def log_event(func):
     def wrapper(username, password, *args, **kwargs):
         try:
             os.makedirs(DATA_DIR, exist_ok=True)
-        except (OSError, PermissionError) as e:
+        except (PermissionError, OSError) as e:
             print(f"Directory creation error for logs: {e}")
 
         result_status = "failure"
@@ -144,8 +152,12 @@ def log_event(func):
 
                 with open(LOG_JSON_PATH, mode="w", encoding="utf-8") as f:
                     json.dump(logs, f, indent=4, ensure_ascii=False)
-            except (OSError, FileNotFoundError, PermissionError) as e:
-                print(f"File system error while logging event: {e}")
+            except FileNotFoundError:
+                print(f"Log event error: File is not found!")
+            except PermissionError:
+                print("Log event error: File permission error!")
+            except OSError as e:
+                print(e)
 
     return wrapper
 
