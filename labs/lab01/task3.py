@@ -104,7 +104,7 @@ def read_users_db() -> list:
         print("\n")
         return db
     except FileNotFoundError:
-        print(f"File is not found!")
+        print("File is not found!")
     except PermissionError:
         print("File permission error!")
     except OSError as e:
@@ -153,7 +153,7 @@ def log_event(func):
                 with open(LOG_JSON_PATH, mode="w", encoding="utf-8") as f:
                     json.dump(logs, f, indent=4, ensure_ascii=False)
             except FileNotFoundError:
-                print(f"Log event error: File is not found!")
+                print("Log event error: File is not found!")
             except PermissionError:
                 print("Log event error: File permission error!")
             except OSError as e:

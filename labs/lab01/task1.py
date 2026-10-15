@@ -88,4 +88,5 @@ def main():
         result = evaluate_password(pwd, passwords)
         print(f"{idx:<3} | {pwd:<20} | {result:<15}")
 
+
 main()
